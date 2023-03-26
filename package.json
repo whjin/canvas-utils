@@ -1,0 +1,26 @@
+{
+  "name": "canvas-utils",
+  "version": "1.0.0",
+  "description": "canvas utils",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --config webpack.config.js --watch"
+  },
+  "keywords": [
+    "canvas",
+    "html"
+  ],
+  "author": "whjin",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "less-loader": "^11.1.0",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1"
+  }
+}

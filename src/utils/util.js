@@ -66,3 +66,24 @@ export const createRoundedRect = (ctx, width, height, r, offsetX, offsetY) => {
     ctx.arcTo(offsetX, offsetY, offsetX + r, offsetY, r);
     ctx.closePath();
 };
+
+// 绘制N叶草
+export const createLeaf = (ctx, n, dx, dy, size, length) => {
+    ctx.beginPath();
+    ctx.moveTo(dx, dy + size);
+    let degree = 2 * Math.PI / n;
+    for (let i = 1; i < n + 1; i++) {
+        // 控制点坐标
+        let cx1 = Math.sin((i - 1) * degree) * length + dx;
+        let cy1 = Math.cos((i - 1) * degree) * length + dy;
+        let cx2 = Math.sin(i * degree) * length + dx;
+        let cy2 = Math.cos(i * degree) * length + dy;
+
+        // 结束点坐标
+        let x = Math.sin(i * degree) * size + dx;
+        let y = Math.cos(i * degree) * size + dy;
+
+        ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
+    }
+    ctx.closePath();
+};

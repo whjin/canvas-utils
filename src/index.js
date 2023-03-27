@@ -1,4 +1,4 @@
-import { createPolygon, createFiveStar, createCagePalette, createGradientPalette, createRoundedRect } from "./utils/util";
+import { createPolygon, createFiveStar, createCagePalette, createGradientPalette, createRoundedRect, createLeaf } from "./utils/util";
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
@@ -8,6 +8,7 @@ window.onload = function () {
     drawGradientPalette(canvasWrapper);
     drawRound(canvasWrapper);
     drawRoundedRect(canvasWrapper);
+    drawLeaf(canvasWrapper);
 };
 
 function createEle (canvasWrapper) {
@@ -79,5 +80,15 @@ function drawRoundedRect (canvasWrapper) {
     const ctx = canvas.getContext('2d');
     createRoundedRect(ctx, 100, 100, 20, 20, 20);
     ctx.fillStyle = "HotPink";
+    ctx.fill();
+}
+
+// 绘制N叶草
+function drawLeaf (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas6');
+    const ctx = canvas.getContext('2d');
+    createLeaf(ctx, 4, canvas.width / 2, canvas.height / 2, 20, 80);
+    ctx.fillStyle = "#00ff99";
     ctx.fill();
 }

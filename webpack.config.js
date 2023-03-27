@@ -27,11 +27,6 @@ module.exports = {
             },
         ]
     },
-    resolve: {
-        alias: {
-            '@': './src'
-        }
-    },
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',

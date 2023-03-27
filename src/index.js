@@ -1,10 +1,21 @@
-import { createPolygon, createFiveStar } from "./utils/util";
+import { createPolygon, createFiveStar, createCagePalette, createGradientPalette } from "./utils/util";
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
     drawPolygon(canvasWrapper);
     drawFiveStar(canvasWrapper);
+    drawCagePalette(canvasWrapper);
+    drawGradientPalette(canvasWrapper);
 };
+
+function createEle (canvasWrapper) {
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('width', '200');
+    canvas.setAttribute('height', '150');
+    canvas.style.border = '1px dashed gray';
+    canvasWrapper.appendChild(canvas);
+    return canvas;
+}
 
 function drawPolygon (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
@@ -22,11 +33,16 @@ function drawFiveStar (canvasWrapper) {
     createFiveStar(ctx);
 }
 
-function createEle (canvasWrapper) {
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('width', '200');
-    canvas.setAttribute('height', '150');
-    canvas.style.border = '1px dashed gray';
-    canvasWrapper.appendChild(canvas);
-    return canvas;
+function drawCagePalette (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas3');
+    const ctx = canvas.getContext('2d');
+    createCagePalette(ctx);
+}
+
+function drawGradientPalette (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas4');
+    const ctx = canvas.getContext('2d');
+    createGradientPalette(ctx, canvas.height);
 }

@@ -51,3 +51,18 @@ export const createGradientPalette = (ctx, height) => {
         ctx.fillRect(3 * i, 0, 3, height);
     }
 };
+
+// 绘制圆角矩形
+export const createRoundedRect = (ctx, width, height, r, offsetX, offsetY) => {
+    ctx.beginPath();
+    ctx.moveTo(offsetX + r, offsetY);
+    ctx.lineTo(offsetX + width - r, offsetY);
+    ctx.arcTo(offsetX + width, offsetY, offsetY + width, offsetY + r, r);
+    ctx.lineTo(offsetX + width, offsetY + height - r);
+    ctx.arcTo(offsetX + width, offsetY + height, offsetX + width - r, offsetY + height, r);
+    ctx.lineTo(offsetX + r, offsetY + height);
+    ctx.arcTo(offsetX, offsetY + height, offsetX, offsetY + height - r, r);
+    ctx.lineTo(offsetX, offsetY + r);
+    ctx.arcTo(offsetX, offsetY, offsetX + r, offsetY, r);
+    ctx.closePath();
+};

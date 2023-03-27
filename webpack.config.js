@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -26,18 +25,5 @@ module.exports = {
                 exclude: /node_modules/
             },
         ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.resolve(__dirname, 'index.html')
-        })
-    ],
-    devServer: {
-        contentBase: './public',
-        hot: true,
-        port: 8080,
-        open: true,
-        compress: true
     }
 };

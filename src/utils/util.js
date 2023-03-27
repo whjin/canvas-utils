@@ -87,3 +87,11 @@ export const createLeaf = (ctx, n, dx, dy, size, length) => {
     }
     ctx.closePath();
 };
+
+// 绘制扇形
+export const createSector = (ctx, x, y, r, angle1, angle2) => {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.arc(x, y, r, angle1 * Math.PI / 180, angle2 * Math.PI / 180, false);
+    ctx.closePath();
+};

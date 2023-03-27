@@ -1,4 +1,4 @@
-import { createPolygon, createFiveStar, createCagePalette, createGradientPalette, createRoundedRect, createLeaf } from "./utils/util";
+import { createPolygon, createFiveStar, createCagePalette, createGradientPalette, createRoundedRect, createLeaf, createSector } from "./utils/util";
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
@@ -9,6 +9,7 @@ window.onload = function () {
     drawRound(canvasWrapper);
     drawRoundedRect(canvasWrapper);
     drawLeaf(canvasWrapper);
+    drawSector(canvasWrapper);
 };
 
 function createEle (canvasWrapper) {
@@ -90,5 +91,15 @@ function drawLeaf (canvasWrapper) {
     const ctx = canvas.getContext('2d');
     createLeaf(ctx, 4, canvas.width / 2, canvas.height / 2, 20, 80);
     ctx.fillStyle = "#00ff99";
+    ctx.fill();
+}
+
+// 绘制扇形
+function drawSector (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas7');
+    const ctx = canvas.getContext('2d');
+    createSector(ctx, canvas.width / 2, canvas.height / 2, 50, 30, 120);
+    ctx.fillStyle = "HotPink";
     ctx.fill();
 }

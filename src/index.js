@@ -2,6 +2,7 @@ import { createPolygon, createFiveStar, createCagePalette, createGradientPalette
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
+    drawRadialGradient(canvasWrapper);
     drawLinearGradient(canvasWrapper);
     drawTransparentImage(canvasWrapper);
     drawMaskImage(canvasWrapper);
@@ -24,7 +25,28 @@ window.onload = function () {
     drawSector(canvasWrapper);
 };
 
-// 绘制渐变效果
+// 绘制径向渐变效果
+function drawRadialGradient (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    const ctx = canvas.getContext('2d');
+    let i = 0;
+    setInterval(() => {
+        const gnt = ctx.createRadialGradient(100, 75, 0, 100, 75, 100);
+        gnt.addColorStop(0, 'magenta');
+        gnt.addColorStop(i * 0.25, 'blue');
+        gnt.addColorStop(i * 0.5, 'green');
+        gnt.addColorStop(i * 0.75, 'yellow');
+        gnt.addColorStop(1, 'HotPink');
+        ctx.fillStyle = gnt;
+        i += 0.1;
+        if (i >= 1) {
+            i = 0;
+        }
+        ctx.fillRect(0, 0, 200, 150);
+    }, 100);
+}
+
+// 绘制线性渐变效果
 function drawLinearGradient (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
     const ctx = canvas.getContext('2d');

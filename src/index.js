@@ -2,6 +2,7 @@ import { createPolygon, createFiveStar, createCagePalette, createGradientPalette
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
+    drawLinearGradient(canvasWrapper);
     drawTransparentImage(canvasWrapper);
     drawMaskImage(canvasWrapper);
     drawSepiaImage(canvasWrapper);
@@ -23,6 +24,18 @@ window.onload = function () {
     drawSector(canvasWrapper);
 };
 
+// 绘制渐变效果
+function drawLinearGradient (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    const ctx = canvas.getContext('2d');
+    let text = '中华诗词网';
+    ctx.font = 'bold 30px 微软雅黑';
+    const gnt = ctx.createLinearGradient(0, 0, 150, 100);
+    gnt.addColorStop(0, 'HotPink');
+    gnt.addColorStop(1, 'LightSkyBlue');
+    ctx.fillStyle = gnt;
+    ctx.fillText(text, 25, 85);
+}
 // 图片透明效果
 function drawTransparentImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);

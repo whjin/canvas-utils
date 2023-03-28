@@ -1,7 +1,10 @@
-import { createPolygon, createFiveStar, createCagePalette, createGradientPalette, createRoundedRect, createLeaf, createSector } from "./utils/util";
+import { createPolygon, createFiveStar, createCagePalette, createGradientPalette, createRoundedRect, createLeaf, createSector, } from "./utils/util";
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
+    drawRainbow(canvasWrapper);
+    drawGraph(canvasWrapper);
+    drawPattern(canvasWrapper);
     drawImage(canvasWrapper);
     drawPolygon(canvasWrapper);
     drawFiveStar(canvasWrapper);
@@ -13,6 +16,57 @@ window.onload = function () {
     drawSector(canvasWrapper);
 };
 
+// 绘制彩虹
+function drawRainbow (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas12');
+    const ctx = canvas.getContext('2d');
+    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple'];
+    ctx.lineWidth = 12;
+    ctx.translate(50, 0);
+    for (let i = 0, len = colors.length; i < len; i++) {
+        ctx.translate(0, 10);
+        ctx.strokeStyle = colors[i];
+        ctx.beginPath();
+        ctx.arc(50, 100, 100, 0, 180 * Math.PI / 180, true);
+        ctx.stroke();
+    }
+}
+
+// 绘制变形图案
+function drawGraph (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas11');
+    const ctx = canvas.getContext('2d');
+    ctx.translate(150, 0);
+    ctx.fillStyle = 'rgba(255,0,0,0.25)';
+    for (let i = 0; i < 50; i++) {
+        ctx.translate(25, 25);
+        ctx.scale(0.95, 0.95);
+        ctx.rotate(Math.PI / 10);
+        ctx.fillRect(0, 0, 100, 50);
+    }
+}
+
+// 平铺canvas图案
+function drawPattern (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas10');
+    const ctx = canvas.getContext('2d');
+    const bgCanvas = document.createElement('canvas');
+    bgCanvas.width = 20;
+    bgCanvas.height = 20;
+    const bgCtx = bgCanvas.getContext('2d');
+    bgCtx.beginPath();
+    bgCtx.arc(10, 10, 10, 0, 360 * Math.PI / 180, true);
+    bgCtx.closePath();
+    bgCtx.fillStyle = 'HotPink';
+    bgCtx.fill();
+    const pattern = ctx.createPattern(bgCanvas, 'repeat');
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, 0, 200, 200);
+}
+
 // 绘制图片
 function drawImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
@@ -21,7 +75,7 @@ function drawImage (canvasWrapper) {
     const image = new Image();
     image.src = "src/static/images/bvb.png";
     image.onload = function () {
-        ctx.drawImage(image, 0, 0, 150, 150);
+        ctx.drawImage(image, 0, 0, 200, 150, 50, 25, 100, 100);
     };
 }
 

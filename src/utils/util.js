@@ -1,3 +1,5 @@
+
+
 // 绘制正多边形
 export const createPolygon = (ctx, n, dx, dy, size) => {
     ctx.beginPath();

@@ -2,6 +2,8 @@ import { createPolygon, createFiveStar, createCagePalette, createGradientPalette
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
+    drawBWImage(canvasWrapper);
+    drawReverseImage(canvasWrapper);
     drawRainbow(canvasWrapper);
     drawGraph(canvasWrapper);
     drawPattern(canvasWrapper);
@@ -15,6 +17,47 @@ window.onload = function () {
     drawLeaf(canvasWrapper);
     drawSector(canvasWrapper);
 };
+
+// 图片黑白效果
+function drawBWImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas13');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 10, 10);
+        const imgData = ctx.getImageData(0, 0, 150, 120);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            let average = (data[i + 0] + data[i + 1] + data[i + 2] + data[i + 3]) / 3;
+            data[i + 0] = average;
+            data[i + 1] = average;
+            data[i + 2] = average;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 图片反转效果
+function drawReverseImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('id', 'canvas13');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 10, 10);
+        const imgData = ctx.getImageData(0, 0, 150, 120);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            data[i + 0] = 255 - data[i + 0];
+            data[i + 1] = 255 - data[i + 1];
+            data[i + 2] = 255 - data[i + 2];
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
 
 // 绘制彩虹
 function drawRainbow (canvasWrapper) {

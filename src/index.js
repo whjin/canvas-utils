@@ -2,14 +2,17 @@ import { createPolygon, createFiveStar, createCagePalette, createGradientPalette
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
+    drawTransparentImage(canvasWrapper);
+    drawMaskImage(canvasWrapper);
+    drawSepiaImage(canvasWrapper);
     drawBrightnessImage(canvasWrapper);
     drawGrayScaleImage(canvasWrapper);
     drawAverageImage(canvasWrapper);
     drawReverseImage(canvasWrapper);
+    drawImage(canvasWrapper);
     drawRainbow(canvasWrapper);
     drawGraph(canvasWrapper);
     drawPattern(canvasWrapper);
-    drawImage(canvasWrapper);
     drawPolygon(canvasWrapper);
     drawFiveStar(canvasWrapper);
     drawCagePalette(canvasWrapper);
@@ -20,15 +23,81 @@ window.onload = function () {
     drawSector(canvasWrapper);
 };
 
-// 图片亮度效果
-function drawBrightnessImage (canvasWrapper) {
+// 图片透明效果
+function drawTransparentImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '透明');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = 'src/static/images/bvb.png';
     image.onload = function () {
         ctx.drawImage(image, 0, 0);
-        const imgData = ctx.getImageData(0, 0, 120, 120);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            data[i + 3] = data[i + 3] * 0.5;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 图片蒙版效果
+function drawMaskImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '蒙版');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            let r = data[i + 0];
+            let g = data[i + 1];
+            let b = data[i + 2];
+            let average = (r + g + b) / 3;
+            data[i + 0] = average;
+            data[i + 1] = 0;
+            data[i + 2] = 0;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 图片复古效果
+function drawSepiaImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '复古');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            let r = data[i + 0];
+            let g = data[i + 1];
+            let b = data[i + 2];
+            data[i + 0] += r * 0.39 + g * 0.76 + b * 0.18;
+            data[i + 1] += r * 0.35 + g * 0.68 + b * 0.16;
+            data[i + 2] += r * 0.27 + g * 0.53 + b * 0.13;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 图片亮度效果
+function drawBrightnessImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '亮度');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             let brightness = 100;
@@ -43,12 +112,13 @@ function drawBrightnessImage (canvasWrapper) {
 // 图片黑白效果（加权）
 function drawGrayScaleImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '黑白（加权）');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = 'src/static/images/bvb.png';
     image.onload = function () {
         ctx.drawImage(image, 0, 0);
-        const imgData = ctx.getImageData(0, 0, 150, 120);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             let grayscale = data[i] * 0.3 + data[i] * 0.6 + data[i + 2] * 0.1;
@@ -63,12 +133,13 @@ function drawGrayScaleImage (canvasWrapper) {
 // 图片黑白效果（平均）
 function drawAverageImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '黑白（平均）');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = 'src/static/images/bvb.png';
     image.onload = function () {
         ctx.drawImage(image, 0, 0);
-        const imgData = ctx.getImageData(0, 0, 150, 120);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             let average = (data[i + 0] + data[i + 1] + data[i + 2] + data[i + 3]) / 3;
@@ -83,12 +154,13 @@ function drawAverageImage (canvasWrapper) {
 // 图片反转效果
 function drawReverseImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '反转');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = 'src/static/images/bvb.png';
     image.onload = function () {
         ctx.drawImage(image, 0, 0);
-        const imgData = ctx.getImageData(0, 0, 150, 120);
+        const imgData = ctx.getImageData(0, 0, 200, 150);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             data[i + 0] = 255 - data[i + 0];
@@ -96,6 +168,18 @@ function drawReverseImage (canvasWrapper) {
             data[i + 2] = 255 - data[i + 2];
         }
         ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 绘制图片
+function drawImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    canvas.setAttribute('title', '原图');
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = "src/static/images/bvb.png";
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0, 200, 150, 0, 0, 200, 150);
     };
 }
 
@@ -145,17 +229,6 @@ function drawPattern (canvasWrapper) {
     const pattern = ctx.createPattern(bgCanvas, 'repeat');
     ctx.fillStyle = pattern;
     ctx.fillRect(0, 0, 200, 200);
-}
-
-// 绘制图片
-function drawImage (canvasWrapper) {
-    let canvas = createEle(canvasWrapper);
-    const ctx = canvas.getContext('2d');
-    const image = new Image();
-    image.src = "src/static/images/bvb.png";
-    image.onload = function () {
-        ctx.drawImage(image, 0, 0, 200, 150, 50, 25, 100, 100);
-    };
 }
 
 // 绘制正多边形

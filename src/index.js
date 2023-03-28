@@ -2,7 +2,9 @@ import { createPolygon, createFiveStar, createCagePalette, createGradientPalette
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
-    drawBWImage(canvasWrapper);
+    drawBrightnessImage(canvasWrapper);
+    drawGrayScaleImage(canvasWrapper);
+    drawAverageImage(canvasWrapper);
     drawReverseImage(canvasWrapper);
     drawRainbow(canvasWrapper);
     drawGraph(canvasWrapper);
@@ -18,15 +20,54 @@ window.onload = function () {
     drawSector(canvasWrapper);
 };
 
-// 图片黑白效果
-function drawBWImage (canvasWrapper) {
+// 图片亮度效果
+function drawBrightnessImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas13');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = 'src/static/images/bvb.png';
     image.onload = function () {
-        ctx.drawImage(image, 10, 10);
+        ctx.drawImage(image, 0, 0);
+        const imgData = ctx.getImageData(0, 0, 120, 120);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            let brightness = 100;
+            data[i + 0] += brightness;
+            data[i + 1] += brightness;
+            data[i + 2] += brightness;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 图片黑白效果（加权）
+function drawGrayScaleImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0);
+        const imgData = ctx.getImageData(0, 0, 150, 120);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            let grayscale = data[i] * 0.3 + data[i] * 0.6 + data[i + 2] * 0.1;
+            data[i + 0] = grayscale;
+            data[i + 1] = grayscale;
+            data[i + 2] = grayscale;
+        }
+        ctx.putImageData(imgData, 0, 0);
+    };
+}
+
+// 图片黑白效果（平均）
+function drawAverageImage (canvasWrapper) {
+    let canvas = createEle(canvasWrapper);
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = 'src/static/images/bvb.png';
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0);
         const imgData = ctx.getImageData(0, 0, 150, 120);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
@@ -42,12 +83,11 @@ function drawBWImage (canvasWrapper) {
 // 图片反转效果
 function drawReverseImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas13');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = 'src/static/images/bvb.png';
     image.onload = function () {
-        ctx.drawImage(image, 10, 10);
+        ctx.drawImage(image, 0, 0);
         const imgData = ctx.getImageData(0, 0, 150, 120);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
@@ -62,7 +102,6 @@ function drawReverseImage (canvasWrapper) {
 // 绘制彩虹
 function drawRainbow (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas12');
     const ctx = canvas.getContext('2d');
     const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple'];
     ctx.lineWidth = 12;
@@ -79,7 +118,6 @@ function drawRainbow (canvasWrapper) {
 // 绘制变形图案
 function drawGraph (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas11');
     const ctx = canvas.getContext('2d');
     ctx.translate(150, 0);
     ctx.fillStyle = 'rgba(255,0,0,0.25)';
@@ -94,7 +132,6 @@ function drawGraph (canvasWrapper) {
 // 平铺canvas图案
 function drawPattern (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas10');
     const ctx = canvas.getContext('2d');
     const bgCanvas = document.createElement('canvas');
     bgCanvas.width = 20;
@@ -113,7 +150,6 @@ function drawPattern (canvasWrapper) {
 // 绘制图片
 function drawImage (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas9');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.src = "src/static/images/bvb.png";
@@ -125,7 +161,6 @@ function drawImage (canvasWrapper) {
 // 绘制正多边形
 function drawPolygon (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas8');
     const ctx = canvas.getContext('2d');
     createPolygon(ctx, 3, 100, 75, 50);
     ctx.fillStyle = "HotPink";
@@ -135,7 +170,6 @@ function drawPolygon (canvasWrapper) {
 // 绘制五角星
 function drawFiveStar (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas7');
     const ctx = canvas.getContext('2d');
     createFiveStar(ctx);
 }
@@ -143,7 +177,6 @@ function drawFiveStar (canvasWrapper) {
 // 绘制方格调色板
 function drawCagePalette (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas6');
     const ctx = canvas.getContext('2d');
     createCagePalette(ctx);
 }
@@ -151,7 +184,6 @@ function drawCagePalette (canvasWrapper) {
 // 绘制渐变调色板
 function drawGradientPalette (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas5');
     const ctx = canvas.getContext('2d');
     createGradientPalette(ctx, canvas.height);
 }
@@ -159,7 +191,6 @@ function drawGradientPalette (canvasWrapper) {
 // 绘制圆形
 function drawRound (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas4');
     const ctx = canvas.getContext('2d');
     // 半圆
     ctx.beginPath();
@@ -178,7 +209,6 @@ function drawRound (canvasWrapper) {
 // 绘制圆角矩形
 function drawRoundedRect (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas3');
     const ctx = canvas.getContext('2d');
     createRoundedRect(ctx, 100, 100, 20, 20, 20);
     ctx.fillStyle = "HotPink";
@@ -188,7 +218,6 @@ function drawRoundedRect (canvasWrapper) {
 // 绘制N叶草
 function drawLeaf (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas2');
     const ctx = canvas.getContext('2d');
     createLeaf(ctx, 4, canvas.width / 2, canvas.height / 2, 20, 80);
     ctx.fillStyle = "#00ff99";
@@ -198,7 +227,6 @@ function drawLeaf (canvasWrapper) {
 // 绘制扇形
 function drawSector (canvasWrapper) {
     let canvas = createEle(canvasWrapper);
-    canvas.setAttribute('id', 'canvas1');
     const ctx = canvas.getContext('2d');
     createSector(ctx, canvas.width / 2, canvas.height / 2, 50, 30, 120);
     ctx.fillStyle = "HotPink";
@@ -210,6 +238,7 @@ function createEle (canvasWrapper) {
     canvas.setAttribute('width', '200');
     canvas.setAttribute('height', '150');
     canvas.style.border = '1px dashed gray';
+    canvas.style.borderRadius = "8px";
     canvasWrapper.appendChild(canvas);
     return canvas;
 }

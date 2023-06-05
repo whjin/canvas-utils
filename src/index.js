@@ -2,6 +2,7 @@ import { createPolygon, createFiveStar, createCagePalette, createGradientPalette
 
 window.onload = function () {
     const canvasWrapper = document.querySelector(".canvas-wrapper");
+    cavaseTestDemo(canvasWrapper);
     drawCompositeOperation(canvasWrapper);
     drawRadialGradient(canvasWrapper);
     drawLinearGradient(canvasWrapper);
@@ -25,6 +26,22 @@ window.onload = function () {
     drawLeaf(canvasWrapper);
     drawSector(canvasWrapper);
 };
+
+// canvas测试实例
+function cavaseTestDemo (canvasWrapper) {
+    const canvas = createEle(canvasWrapper);
+    const ctx = canvas.getContext('2d');
+    // let centerX = canvas.width / 2;
+    // let centerY = canvas.height / 2;
+    // ctx.fillRect(centerX - 30, centerY - 4, 60, 8);
+    // ctx.fillRect(centerX - 4, centerY - 30, 8, 60);
+
+    ctx.font = "50px STHeiti,SimHei";
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'red';
+    ctx.strokeText('文字描边', 0, 90);
+    ctx.fillText('文字描边', 0, 90);
+}
 
 // 绘制混合层叠效果
 function drawCompositeOperation (canvasWrapper) {
